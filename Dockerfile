@@ -22,8 +22,20 @@ RUN apt-get update -qq && apt-get dist-upgrade -y
 	#npm install vega && \
 	#ln -s /node_modules/vega/bin/* /usr/bin/ && \
 	
+# Install from CRAN
 # add pipeR and rlist
-RUN Rscript -e 'install.packages(pkgs = c("ggvis", "gplots", "foreach", "cowplot", "NeatMap", "RJSONIO", "DT", "glmnet"))'
+RUN install.r ggvis \
+	gplots \
+	foreach \
+	cowplot \
+	NeatMap \
+	RJSONIO \
+	DT \
+	glmnet \
+	vioplot
+
+# Install from github
+installGithub.r rstudio/rticles 
 
 ADD install_bioconductor_pkgs /usr/bin/install_bioconductor_pkgs
 RUN chmod +x /usr/bin/install_bioconductor_pkgs
@@ -43,4 +55,3 @@ RUN cd /src && \
 	cd bedtools2 && \
 	make && \
 	make prefix=/usr/local install
-
