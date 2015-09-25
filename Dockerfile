@@ -32,10 +32,11 @@ RUN install.r ggvis \
 	RJSONIO \
 	DT \
 	glmnet \
-	vioplot
+	vioplot \
+	optparse
 
 # Install from github
-installGithub.r rstudio/rticles 
+RUN installGithub.r rstudio/rticles 
 
 ADD install_bioconductor_pkgs /usr/bin/install_bioconductor_pkgs
 RUN chmod +x /usr/bin/install_bioconductor_pkgs
@@ -55,3 +56,5 @@ RUN cd /src && \
 	cd bedtools2 && \
 	make && \
 	make prefix=/usr/local install
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/ && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
