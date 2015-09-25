@@ -1,5 +1,5 @@
-# thephilross/rstudio
-# VERSION 0.2
+# thephilross/satrn
+# VERSION 0.3
 
 FROM rocker/hadleyverse
 
