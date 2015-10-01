@@ -58,3 +58,13 @@ RUN cd /src && \
 	make prefix=/usr/local install
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/ && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
+
+RUN usermod -l phil rstudio \
+  && usermod -m -d /home/phil phil \
+  && groupmod -n phil rstudio \
+  && git config --system user.name Phil \
+  && git config --system user.email philippross369@gmail.com \
+  && git config --system push.default simple \
+  && echo '"\e[5~": history-search-backward' >> /etc/inputrc \
+  && echo '"\e[6~": history-search-backward' >> /etc/inputrc \
+  && echo "phil:explicit9" | chpasswd
