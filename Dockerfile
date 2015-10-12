@@ -33,14 +33,21 @@ RUN install.r ggvis \
 	DT \
 	glmnet \
 	vioplot \
-	optparse
+	optparse \
+	purrr \
+	seqinr
 
 # Install from github
 RUN installGithub.r rstudio/rticles 
 
+# install bioconductor packages
 ADD install_bioconductor_pkgs /usr/bin/install_bioconductor_pkgs
 RUN chmod +x /usr/bin/install_bioconductor_pkgs
 RUN /usr/bin/install_bioconductor_pkgs && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
+
+# add command line interface script
+ADD run_rscript.sh /usr/bin/run_rscript.sh
+RUN chmod +x /usr/bin/run_rscript.sh
 
 # install bioinformatics command line tools
 RUN mkdir /src && \
