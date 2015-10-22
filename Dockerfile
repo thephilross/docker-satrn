@@ -38,9 +38,7 @@ RUN install.r ggvis \
 	seqinr
 
 # Install from github
-RUN installGithub.r rstudio/rticles \
-	gaborcsardi/tamper \
-	thephilross/seqLogo
+RUN installGithub.r rstudio/rticles gaborcsardi/tamper thephilross/seqLogo
 
 # install bioconductor packages
 ADD install_bioconductor_pkgs /usr/bin/install_bioconductor_pkgs
