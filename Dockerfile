@@ -38,7 +38,9 @@ RUN install.r ggvis \
 	seqinr
 
 # Install from github
-RUN installGithub.r rstudio/rticles 
+RUN installGithub.r rstudio/rticles \
+	gaborcsardi/tamper \
+	thephilross/seqLogo
 
 # install bioconductor packages
 ADD install_bioconductor_pkgs /usr/bin/install_bioconductor_pkgs
@@ -75,3 +77,6 @@ RUN usermod -l phil rstudio \
   && echo '"\e[5~": history-search-backward' >> /etc/inputrc \
   && echo '"\e[6~": history-search-backward' >> /etc/inputrc \
   && echo "phil:explicit9" | chpasswd
+
+EXPOSE 8787
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
