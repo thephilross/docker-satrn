@@ -2,6 +2,6 @@
 
 set -eu
 
-Rscript -e "source('http://bioconductor.org/biocLite.R'); biocLite(ask=FALSE); biocLite(c('ballgown', 'CAGEr', 'ShortRead', 'Rsamtools', 'GenomicAlignments', 'GenomicFeatures', 'Biostrings', 'BSgenome', 'ggbio', 'GenomicRanges', 'BiocStyle', 'ChIPseeker', 'msa', 'Gviz', 'topGO', 'qvalue'), ask=FALSE)"
+Rscript -e "source('http://bioconductor.org/biocLite.R'); biocLite(ask=FALSE); biocLite(c('ballgown', 'CAGEr', 'ShortRead', 'Rsamtools', 'GenomicAlignments', 'GenomicFeatures', 'Biostrings', 'BSgenome', 'ggbio', 'GenomicRanges', 'BiocStyle', 'ChIPseeker', 'msa', 'Gviz', 'topGO', 'qvalue', 'org.Pf.plasmo.db', 'Rsubread'), ask=FALSE)"
 
 exit

@@ -35,7 +35,8 @@ RUN install.r ggvis \
 	vioplot \
 	optparse \
 	purrr \
-	seqinr
+	seqinr \
+	servr
 
 # Install from github
 RUN installGithub.r rstudio/rticles gaborcsardi/tamper thephilross/seqLogo
@@ -44,6 +45,11 @@ RUN installGithub.r rstudio/rticles gaborcsardi/tamper thephilross/seqLogo
 ADD install_bioconductor_pkgs /usr/bin/install_bioconductor_pkgs
 RUN chmod +x /usr/bin/install_bioconductor_pkgs
 RUN /usr/bin/install_bioconductor_pkgs && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
+
+# Install BSgenome for P. falciparum
+RUN git clone https://github.com/thephilross/bsgenome.pf.v24.git /BSgenome.Pfalciparum.PlasmoDB.v24 && \
+  tar -czvf /BSgenome.Pfalciparum.PlasmoDB.v24_1.0.tar.gz /BSgenome.Pfalciparum.PlasmoDB.v24 && \
+	R CMD INSTALL BSgenome.Pfalciparum.PlasmoDB.v24_1.0.tar.gz
 
 # add command line interface script
 ADD run_rscript.sh /usr/bin/run_rscript.sh
@@ -64,8 +70,22 @@ RUN cd /src && \
 	make && \
 	make prefix=/usr/local install
 
+# install jekyll
+RUN apt-get update -qq -m && apt-get dist-upgrade -y && apt-get install -y \
+  ruby-dev \
+  python-pygments \
+  && gem install \
+	github-pages \
+  jekyll \
+	jekyll-redirect-from \
+	kramdown \
+	rdiscount \
+	rouge
+
+# clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/ && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
+# change username to phil
 RUN usermod -l phil rstudio \
   && usermod -m -d /home/phil phil \
   && groupmod -n phil rstudio \
