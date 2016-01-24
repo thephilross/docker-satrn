@@ -1,5 +1,5 @@
 # thephilross/satrn
-# VERSION 0.3
+# VERSION 0.4
 
 FROM rocker/hadleyverse
 
@@ -36,10 +36,11 @@ RUN install.r ggvis \
 	optparse \
 	purrr \
 	seqinr \
-	servr
+	servr \
+	knitcitations
 
 # Install from github
-RUN installGithub.r rstudio/rticles gaborcsardi/tamper thephilross/seqLogo
+RUN installGithub.r rstudio/rticles gaborcsardi/tamper thephilross/seqLogo cboettig/knitcitations
 
 # install bioconductor packages
 ADD install_bioconductor_pkgs /usr/bin/install_bioconductor_pkgs
@@ -80,7 +81,8 @@ RUN apt-get update -qq -m && apt-get dist-upgrade -y && apt-get install -y \
 	jekyll-redirect-from \
 	kramdown \
 	rdiscount \
-	rouge
+	rouge \
+	bundler
 
 # clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/ && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
