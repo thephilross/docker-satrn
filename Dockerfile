@@ -40,7 +40,12 @@ RUN install.r ggvis \
 	knitcitations
 
 # Install from github
-RUN installGithub.r rstudio/rticles gaborcsardi/tamper thephilross/seqLogo cboettig/knitcitations
+RUN installGithub.r \
+  rstudio/rticles \
+	gaborcsardi/tamper \
+	thephilross/seqLogo \
+	cboettig/knitcitations \
+	thephilross/iver
 
 # install bioconductor packages
 ADD install_bioconductor_pkgs /usr/bin/install_bioconductor_pkgs
@@ -57,19 +62,29 @@ ADD run_rscript.sh /usr/bin/run_rscript.sh
 RUN chmod +x /usr/bin/run_rscript.sh
 
 # install bioinformatics command line tools
+
+# samtools
 RUN mkdir /src && \
 	cd /src && \
-	wget https://github.com/samtools/samtools/releases/download/1.2/samtools-1.2.tar.bz2 && \
-	tar -xvjf samtools-1.2.tar.bz2 && \
-	cd samtools-1.2 && \
+	wget https://github.com/samtools/samtools/releases/download/1.3/samtools-1.3.tar.bz2 && \
+	tar -xvjf samtools-1.3.tar.bz2 && \
+	cd samtools-1.3 && \
 	make && \
 	make prefix=/usr/local install
 
+# bedtools
 RUN cd /src && \
 	git clone https://github.com/arq5x/bedtools2.git && \
 	cd bedtools2 && \
 	make && \
 	make prefix=/usr/local install
+
+# UCSC command line scripts
+RUN wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/gff3ToGenePred -O /usr/local/bin/gff3ToGenePred && \
+  chmod +x /usr/local/bin/gff3ToGenePred
+
+RUN wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/genePredToBed -O /usr/local/bin/genePredToBed && \
+  chmod +x /usr/local/bin/genePredToBed
 
 # install jekyll
 RUN apt-get update -qq -m && apt-get dist-upgrade -y && apt-get install -y \
