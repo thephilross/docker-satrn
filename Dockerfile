@@ -40,17 +40,17 @@ RUN install.r ggvis \
 	knitcitations \
 	rdrop2
 
+# install bioconductor packages
+ADD install_bioconductor_pkgs /usr/bin/install_bioconductor_pkgs
+RUN chmod +x /usr/bin/install_bioconductor_pkgs
+RUN /usr/bin/install_bioconductor_pkgs && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
+
 # Install from github
 RUN installGithub.r \
   rstudio/rticles \
 	gaborcsardi/tamper \
 	thephilross/seqLogo \
 	thephilross/iver
-
-# install bioconductor packages
-ADD install_bioconductor_pkgs /usr/bin/install_bioconductor_pkgs
-RUN chmod +x /usr/bin/install_bioconductor_pkgs
-RUN /usr/bin/install_bioconductor_pkgs && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
 # Install BSgenome for P. falciparum
 RUN git clone https://github.com/thephilross/bsgenome.pf.v24.git /BSgenome.Pfalciparum.PlasmoDB.v24 && \
