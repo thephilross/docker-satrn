@@ -37,14 +37,14 @@ RUN install.r ggvis \
 	purrr \
 	seqinr \
 	servr \
-	knitcitations
+	knitcitations \
+	rdrop2
 
 # Install from github
 RUN installGithub.r \
   rstudio/rticles \
 	gaborcsardi/tamper \
 	thephilross/seqLogo \
-	cboettig/knitcitations \
 	thephilross/iver
 
 # install bioconductor packages
@@ -89,11 +89,9 @@ RUN wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/genePredToBed -O 
 # install jekyll
 RUN apt-get update -qq -m && apt-get dist-upgrade -y && apt-get install -y \
   ruby-dev \
-  python-pygments \
   && gem install \
 	github-pages \
-  jekyll \
-	jekyll-redirect-from \
+	jekyll-paginate \
 	kramdown \
 	rdiscount \
 	rouge \
