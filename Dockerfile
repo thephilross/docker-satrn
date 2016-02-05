@@ -91,6 +91,7 @@ RUN apt-get update -qq -m && apt-get dist-upgrade -y && apt-get install -y \
   ruby-dev \
   && gem install \
 	github-pages \
+	jekyll \
 	jekyll-paginate \
 	kramdown \
 	rdiscount \
