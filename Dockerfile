@@ -38,7 +38,11 @@ RUN install.r ggvis \
 	seqinr \
 	servr \
 	knitcitations \
-	rdrop2
+	rdrop2 \
+	corrplot \
+	tufte \
+	rticles \
+	rmdformats
 
 # install bioconductor packages
 ADD install_bioconductor_pkgs /usr/bin/install_bioconductor_pkgs
@@ -47,7 +51,6 @@ RUN /usr/bin/install_bioconductor_pkgs && rm -rf /tmp/downloaded_packages/ /tmp/
 
 # Install from github
 RUN installGithub.r \
-  rstudio/rticles \
 	gaborcsardi/tamper \
 	thephilross/seqLogo \
 	thephilross/iver
